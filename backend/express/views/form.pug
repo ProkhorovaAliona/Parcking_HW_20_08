@@ -1,0 +1,9 @@
+extends layout
+
+block content
+
+    form(method="POST" action="/form")
+        input(type="text" name="login")
+        input(type="password" name="pwd")
+        button(type="submit")
+            | Push me!
