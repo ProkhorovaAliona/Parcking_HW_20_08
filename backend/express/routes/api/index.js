@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const jsonData = require('./test.json');
+const jsonData = require('./parking.json');
 
-router.get('/getTest', function(req, res, next) {
+router.get('/getData', function(req, res, next) {
     res.json(jsonData);
 });
 
