@@ -6,19 +6,19 @@ class Parking extends Component {
         super(props);
         this.state = {
             data: null,
-            booked: 'no'
+            available: 'available'
         }
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentWillMount() {
-        const { isFree } = this.state;
-        if(!isFree){
-            this.setState({
-                booked: 'yes' 
-            })
-        }
-    }
+    // componentWillMount() {
+    //     const { data } = this.state;
+    //     if(!data.isFree){
+    //         this.setState({
+    //           available: 'booked' 
+    //         })
+    //     }
+    // }
 
     componentDidMount() {
         this.getData();
@@ -41,13 +41,16 @@ class Parking extends Component {
       }
 
     handleClick(ev, id) {
+   //   const { available } = this.state;
       const { data } = this.state;
       const place = data[id];
-      //console.log('parkk', data)
-      
-        if(place.isFree == true){
+      console.log('event', ev)
+        if(place.isFree == "free"){
           console.log('isFree', place.isFree)
-          place.isFree = false;
+          place.isFree = "booked";
+          this.setState({
+            available: "booked"
+          })
         } else {
           console.log('Already booked. isFree', place.isFree)
 
@@ -56,8 +59,8 @@ class Parking extends Component {
 
     renderItems(props) {
       const { data, onClick } = props;
-      console.log('parsedData', data)
-      
+      console.log('parsedData', data);
+
       return Object.keys(data).map((id) => (
         <div 
           onClick={(ev) => onClick(ev, id)} 
@@ -67,8 +70,8 @@ class Parking extends Component {
           <div className={style.num}>
             {data[id].id}
           </div>
-          <div className={style.num}>
-            {data[id].booked}
+          <div className={style.free}>
+            {data[id].isFree}
           </div>
         </div>
       ));
@@ -78,6 +81,7 @@ class Parking extends Component {
       const { data } = this.state;
       return(
           <header>
+            <div>
             { data !== null ? (
               <this.renderItems 
                 data={data}
@@ -86,6 +90,7 @@ class Parking extends Component {
             ) : (
               <span> Loading ... </span>
             )}
+            </div>
             </header>
         )
     }

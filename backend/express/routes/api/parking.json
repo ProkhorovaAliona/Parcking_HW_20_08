@@ -1,10 +1,10 @@
 {
     "places": 
     [
-        { "id" : 1, "isFree" : true, "booked": "no" },
-        { "id" : 2, "isFree" : false, "booked": "yes"},
-        { "id" : 3, "isFree" : true, "booked": "no" },
-        { "id" : 4, "isFree" : true, "booked": "no" }
+        { "id" : 1, "isFree" : "free"},
+        { "id" : 2, "isFree" : "booked"},
+        { "id" : 3, "isFree" : "free"},
+        { "id" : 4, "isFree" : "free"}
     ]
 }
 

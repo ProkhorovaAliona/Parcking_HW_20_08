@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Places from '../../components/Places';
 import Parking from '../../components/Parking';
+import style from './style.scss'
 
 const places = [
   {
@@ -25,15 +25,10 @@ class MainPage extends Component {
 
   render() {
     return (
-    <div> 
-      <h1> Private parking </h1> 
-      {/* <div>
-        <Places park={places}/>
-      </div> */}
       <div>
+        <div className={style.title}> Private parking </div> 
         <Parking />
       </div>
-    </div>
     );
   }
 }
