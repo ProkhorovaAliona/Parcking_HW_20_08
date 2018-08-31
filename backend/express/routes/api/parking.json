@@ -1,8 +1,11 @@
-[{
-    "id" : 1,
-    "isFree" : true
-},
 {
-    "id": 2,
-    "isFree" : false
-}]
+    "places": 
+    [
+        { "id" : 1, "isFree" : true, "booked": "no" },
+        { "id" : 2, "isFree" : false, "booked": "yes"},
+        { "id" : 3, "isFree" : true, "booked": "no" },
+        { "id" : 4, "isFree" : true, "booked": "no" }
+    ]
+}
+
+

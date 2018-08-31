@@ -6,5 +6,5 @@ router.get('/getData', function(req, res, next) {
     res.json(jsonData);
 });
 
-console.log(jsonData[0].id);
+console.log(jsonData.places[0].id);
 module.exports = router;
