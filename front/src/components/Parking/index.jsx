@@ -28,7 +28,7 @@ class Parking extends Component {
           data
         })
       )
-      .catch(error => console.log('failed', error));
+      .catch(error => console.log('Data did not get', error));
   }
 
   handleClick(ev, id) {
@@ -41,10 +41,47 @@ class Parking extends Component {
       this.setState({
         ok: 'ok'
       })
+/*
+      const dataArr = Object.values(data);
+      console.log('changed data', dataArr);
+
+      const arrayToObject = (array, keyField) =>
+      array.reduce((obj, item) => {
+        obj[item[keyField]] = item
+        return obj
+      }, {})
+      const dataObj = arrayToObject(dataArr, "id")
+      console.log('obj data', dataObj)
+*/
+      function post(dataObj) {
+        return fetch('http://localhost:5000/api/getData', {
+          method: 'POST',
+          body: JSON.stringify(dataObj),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(checkStatus)
+          .then(()=>console.log('post!!!'))
+      }
+      
+      function checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+          return response
+        } else {
+          var error = new Error(response.statusText)
+          error.response = response
+          throw error
+        }
+      }
+
+      post(data);
+
     } else {
       console.log('Already booked. isFree', place.isFree)
     }
-
   }
 
   renderItems(props) {
