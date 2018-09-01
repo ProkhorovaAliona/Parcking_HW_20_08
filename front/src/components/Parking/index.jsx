@@ -23,12 +23,8 @@ class Parking extends Component {
         acc[id] = val;
         return acc;
       }, {}))
-      .then(data =>
-        this.setState({
-          data
-        })
-      )
-      .catch(error => console.log('Data did not get', error));
+      .then(data => this.setState({data}))
+      .catch(error => console.log('Data did not get  ', error));
   }
 
   handleClick(ev, id) {
@@ -41,22 +37,22 @@ class Parking extends Component {
       this.setState({
         ok: 'ok'
       })
-/*
-      const dataArr = Object.values(data);
-      console.log('changed data', dataArr);
 
-      const arrayToObject = (array, keyField) =>
-      array.reduce((obj, item) => {
-        obj[item[keyField]] = item
-        return obj
-      }, {})
-      const dataObj = arrayToObject(dataArr, "id")
-      console.log('obj data', dataObj)
-*/
-      function post(dataObj) {
+      function post(data) {
+        const dataArr = Object.values(data);
+        console.log('dataArr!', dataArr);
+
+        const arrayToObject = (array, keyField) =>
+        array.reduce((obj, item) => {
+          obj[item[keyField]] = item
+          return obj
+        }, {})
+        const dataObj = arrayToObject(dataArr, "id")
+        console.log('obj data', dataObj[id])
+
         return fetch('http://localhost:5000/api/getData', {
           method: 'POST',
-          body: JSON.stringify(dataObj),
+          body: JSON.stringify(dataObj[id]),
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -64,7 +60,7 @@ class Parking extends Component {
         })
           .then(response => response.json())
           .then(checkStatus)
-          .then(()=>console.log('post!!!'))
+          .then(()=>console.log('post!', dataObj[id]))
       }
       
       function checkStatus(response) {
@@ -113,10 +109,8 @@ class Parking extends Component {
             <this.renderItems
               data={data}
               onClick={this.handleClick}
-            />
-          ) : (
-              <span> Loading ... </span>
-            )}
+            /> 
+              ) : (<span> Loading ... </span>)}
         </div>
       </header>
     )
