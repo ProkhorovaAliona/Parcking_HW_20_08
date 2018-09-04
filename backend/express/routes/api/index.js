@@ -18,10 +18,10 @@ router.post('/getData',
 function update(req, res) {
     console.log('updates: ', req.body);
     console.log('type: ',typeof req.body);
-    fs.writeFile('parking.json', req.body, function (err) {
-        if (err) throw err;
-        console.log('Saved!');
-    });
+    // fs.writeFile('parking.json', req.body, function (err) {
+    //     if (err) throw err;
+    //     console.log('Saved!');
+    //});
     res.sendStatus(200);
     res.json(jsonData);
 })

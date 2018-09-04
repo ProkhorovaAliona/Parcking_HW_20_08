@@ -4,15 +4,27 @@ import style from './style.scss';
 class Parking extends Component {
   constructor(props) {
     super(props);
+
+    const initData = localStorage.getItem('changed place');
+    const initDataJ = JSON.parse(initData);
+
     this.state = {
-      data: null,
+      data: initDataJ,
       available: 'free'
     }
     this.handleClick = this.handleClick.bind(this);
+    this.handleLoad = this.handleLoad.bind(this);
   }
 
   componentDidMount() {
-    this.getData();
+    // const dataObj = localStorage.getItem('changed place');
+    // this.setState(prevState => ({
+    //   data: JSON.stringify(dataObj)
+    // }));
+    }
+
+    handleLoad() {
+      this.getData();
   }
 
   getData() {
@@ -47,8 +59,11 @@ class Parking extends Component {
           obj[item[keyField]] = item
           return obj
         }, {})
-        const dataObj = arrayToObject(dataArr, "id")
-        console.log('obj data', dataObj[id])
+
+        const dataObj = arrayToObject(dataArr, "id");
+        const dataJSON = JSON.stringify(dataObj);
+        localStorage.setItem('changed place', dataJSON);
+        console.log('obj data', dataObj[id]);
 
         return fetch('http://localhost:5000/api/getData', {
           method: 'POST',
@@ -58,7 +73,7 @@ class Parking extends Component {
             'Content-Type': 'application/json'
           }
         })
-          .then(response => response.json())
+        //  .then(response => response.json())
           .then(checkStatus)
           .then(()=>console.log('post!', dataObj[id]))
       }
@@ -82,9 +97,7 @@ class Parking extends Component {
 
   renderItems(props) {
     const { data, onClick } = props;
-    console.log('parsedData', data);
-
-    return Object.keys(data).map((id) => (
+    return Object.keys(data).map((id, idx) => (
       <div
         onClick={(ev) => onClick(ev, id)}
         className={style.place}
@@ -104,6 +117,11 @@ class Parking extends Component {
     const { data } = this.state;
     return (
       <header>
+        <div>
+          <button type="submit" className={style.load} onClick={this.handleLoad}>
+            Load data from the server
+          </button>
+        </div>
         <div>
           {data !== null ? (
             <this.renderItems
